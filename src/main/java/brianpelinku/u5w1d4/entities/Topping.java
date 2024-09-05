@@ -4,20 +4,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 public class Topping {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private long id;
-    @Setter
     private String nome;
-    @Setter
     private double kcal;
-    @Setter
     private double prezzo;
 
     public Topping(String nome, double kcal, double prezzo) {

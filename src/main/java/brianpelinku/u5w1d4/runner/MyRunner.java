@@ -1,51 +1,53 @@
 package brianpelinku.u5w1d4.runner;
 
-
-
 import brianpelinku.u5w1d4.U5w1d4Application;
 import brianpelinku.u5w1d4.entities.*;
+import brianpelinku.u5w1d4.services.BevandeService;
+import brianpelinku.u5w1d4.services.PizzaService;
+import brianpelinku.u5w1d4.services.ToppingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class MyRunner implements CommandLineRunner {
 
-   /* @Autowired
-    @Qualifier("tavolo1")
-    private Tavolo tavolo;*/
+    @Autowired
+    private BevandeService bevandeService;
 
-    /*@Autowired
-    private Ordine ordine;*/
+    @Autowired
+    private PizzaService pizzaService;
 
-    /*@Autowired
-    private Menu menu;*/
+    @Autowired
+    private ToppingService toppingService;
 
 
     @Override
     public void run(String... args) throws Exception {
 
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(U5w1d4Application.class);
+        Bevande drink = new Bevande("birra weiss", 300, 5);
+        bevandeService.saveBevanda(drink);
 
+        Topping toppingMozzarella = new Topping("mozzarella", 200,1.5);
+        Topping toppingPomodoro = new Topping("pomodoro", 250,1.5);
 
-        /*tavolo.printTavolo();*/
+        toppingService.saveTopping(toppingMozzarella);
+        toppingService.saveTopping(toppingPomodoro);
 
-        System.out.println("Ciao e benuvenuti \nRistoria Pizzorante se non vieni sei ignorante");
-        /*menu.printMenu();*/
+        List<Topping> toppingList = new ArrayList<>();
+        toppingList.add(toppingMozzarella);
+        toppingList.add(toppingPomodoro);
 
-        /*Ordine ordine1 = new Ordine(3, this.tavolo);
-        ordine1.aggiungiPizza(context.getBean("pizza_margherita", Pizza.class));
-        ordine1.aggiungiPizza(context.getBean("pizza_prosciutto", Pizza.class));
-        ordine1.aggiungiPizza(context.getBean("pizza_bufalotta", Pizza.class));
-        ordine1.aggiungiBevanda(context.getBean("birra", Bevande.class));
-        ordine1.aggiungiBevanda(context.getBean("vino", Bevande.class));
-        ordine1.aggiungiBevanda(context.getBean("acqua_frizzante", Bevande.class));
-        ordine1.printOrdine();*/
+        Pizza pizzaMargherita = new Pizza("Pizza Margherita", toppingList);
 
-        //ordine.printOrdine();
+        pizzaService.savePizza(pizzaMargherita);
 
+        System.out.println("Ciao e benvenuti \nRistoria Pizzorante se non vieni sei ignorante");
 
     }
 
